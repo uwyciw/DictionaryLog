@@ -23,6 +23,7 @@
 #include <stdarg.h>
 #include <string.h>
 
+static DLOG_LEVEL_T gLevel = DLOG_LEVEL_DEBUG;
 static DLOG_TIMESTAMP_T(*gTimestamp)(void) = NULL;
 static void (*gStorage)(DLOG_HEAD_T * head, uint8_t * body, size_t size) = NULL;
 
@@ -38,6 +39,11 @@ bool DLogInit(DLOG_TIMESTAMP_T(*timestamp)(void), void (*store)(DLOG_HEAD_T * he
     return true;
 }
 
+void DLogSetLevel(DLOG_LEVEL_T level)
+{
+    gLevel = level;
+}
+
 void DLogWrite(uint32_t level, uint32_t key, int argc, ...)
 {
     int index = 0;
@@ -46,7 +52,7 @@ void DLogWrite(uint32_t level, uint32_t key, int argc, ...)
     DLOG_TIMESTAMP_T timestamp = 0;
     uint8_t body[sizeof(uint32_t) * DLOG_ARGS_MAX + sizeof(DLOG_TIMESTAMP_T)] = { 0 };
 
-    if (argc > DLOG_ARGS_MAX) {
+    if (argc > DLOG_ARGS_MAX || level > gLevel) {
         return;
     }
 

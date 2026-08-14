@@ -63,7 +63,7 @@ void DLogWrite(uint32_t level, uint32_t key, int argc, ...);
 #if defined(__GNUC__) // GNU Compiler
 #define __DLOG_PRINTF(level, format, args...)                                                           \
     do {                                                                                                \
-        __attribute__((section(".logstr"))) static char logstr[] = format DLOG_LINE_FEED;               \
+        __attribute__((section(".logstr"))) const static char logstr[] = format DLOG_LINE_FEED;         \
         DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
     } while (0)
 #elif defined(__ICCARM__) // IAR Compiler
@@ -75,7 +75,7 @@ void DLogWrite(uint32_t level, uint32_t key, int argc, ...);
 #elif defined(__CC_ARM) // ARM Compiler
 #define __DLOG_PRINTF(level, format, args...)                                                           \
     do {                                                                                                \
-        __attribute__((section("logstr"))) static char logstr[] = format DLOG_LINE_FEED;                \
+        __attribute__((section("logstr"))) const static char logstr[] = format DLOG_LINE_FEED;          \
         DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
     } while (0)
 #else
