@@ -21,6 +21,13 @@ import json
 import sys
 import os
 import struct
+import re
+
+'''
+ @brief 匹配格式串中的转换字符；"%%"优先匹配以避免误识别。
+ @note  用于确定各参数的有/无符号解释，与C的printf语义一致。
+'''
+FORMAT_SPEC_RE = re.compile(r'%%|%[-+ #0]*\d*(?:\.\d+)?(?:hh|h|ll|l|L|z|j|t)?([diouxXcs])')
 
 '''
  @brief 打印级别。
@@ -122,11 +129,18 @@ def ParseOneLog(byteArray, timestampEnable, logstrContent):
         timestamp = struct.unpack("<I", bytes(byteArray[index:index+4]))[0]
         index = index + 4
 
-    if argc > 0: # 如果该条日志有参数，逐一读取。
+    if argc > 0: # 如果该条日志有参数，依据转换字符的符号性逐一读取。
+        convs = [c for c in FORMAT_SPEC_RE.findall(formateField) if c]
         for i in range(argc):
-            arguments.append(struct.unpack("<I", bytes(byteArray[index:index+4]))[0])
+            value = struct.unpack("<i", bytes(byteArray[index:index+4]))[0] # 先按有符号解析。
+            if i < len(convs) and convs[i] in "di": # 有符号转换：保持原值。
+                arguments.append(value)
+            elif i < len(convs) and convs[i] == "c": # %c只取最低字节，与C截断语义一致。
+                arguments.append(value & 0xFF)
+            else: # 无符号转换（u/x/X/o等）或未知：还原为无符号。
+                arguments.append(value & 0xFFFFFFFF)
             index = index + 4
-    
+
     if timestampEnable == True: # 每条日志的头部信息。
         log = "[sn:%03d][%5s][%d]:" % (sn, log_level[level], timestamp)
     else:

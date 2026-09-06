@@ -59,22 +59,22 @@ void DLogWrite(uint32_t level, uint32_t key, int argc, ...);
  * @param level：日志级别；format：文本内容；args：日志的参数。
  * @retval
  */
-#if defined(__GNUC__) // GNU Compiler
-#define __DLOG_PRINTF(level, format, args...)                                                           \
-    do {                                                                                                \
-        __attribute__((section(".logstr"))) const static char logstr[] = format DLOG_LINE_FEED;         \
-        DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
-    } while (0)
-#elif defined(__ICCARM__) // IAR Compiler
+#if defined(__ICCARM__) // IAR Compiler
 #define __DLOG_PRINTF(level, format, args...)                                                           \
     do {                                                                                                \
         const static char logstr[] @ "logstr" = format DLOG_LINE_FEED;                                  \
         DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
     } while (0)
-#elif defined(__CC_ARM) // ARM Compiler
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION) // ARM Compiler (AC5 / AC6)
 #define __DLOG_PRINTF(level, format, args...)                                                           \
     do {                                                                                                \
         __attribute__((section("logstr"))) const static char logstr[] = format DLOG_LINE_FEED;          \
+        DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
+    } while (0)
+#elif defined(__GNUC__) // GNU Compiler
+#define __DLOG_PRINTF(level, format, args...)                                                           \
+    do {                                                                                                \
+        __attribute__((section(".logstr"))) const static char logstr[] = format DLOG_LINE_FEED;         \
         DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
     } while (0)
 #else
