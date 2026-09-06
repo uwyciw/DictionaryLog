@@ -147,9 +147,9 @@ ARM Macro Assembler    Page 3
               00000000 
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M7 --fpu=
 SoftVFP --depend=.\objects\startup_armcm7.d -o.\objects\startup_armcm7.o -IC:\U
-sers\LX\AppData\Local\Arm\Packs\ARM\Cortex_DFP\1.1.0\Device\ARMCM7\Include --pr
-edefine="__UVISION_VERSION SETA 540" --predefine="ARMCM7 SETA 1" --list=.\listi
-ngs\startup_armcm7.lst startup_ARMCM7.s
+sers\LX\AppData\Local\KEIL\Packs\ARM\Cortex_DFP\1.1.0\Device\ARMCM7\Include --p
+redefine="__UVISION_VERSION SETA 540" --predefine="ARMCM7 SETA 1" --list=.\list
+ings\startup_armcm7.lst startup_ARMCM7.s
 
 
 
