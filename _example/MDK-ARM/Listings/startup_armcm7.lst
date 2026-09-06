@@ -7,30 +7,30 @@ ARM Macro Assembler    Page 1
     1 00000000                 PRESERVE8
     2 00000000                 THUMB
     3 00000000         
-    4 00000000 00000400 
+    4 00000000 00004000 
                        Stack_Size
-                               EQU              0x00000400
-    5 00000000 00000200 
+                               EQU              0x00004000
+    5 00000000 00002000 
                        Heap_Size
-                               EQU              0x00000200
+                               EQU              0x00002000
     6 00000000         
     7 00000000                 AREA             STACK, DATA, NOINIT, READWRITE,
  ALIGN=3
     8 00000000         Stack_Mem
                                SPACE            Stack_Size
-    9 00000400                 EXPORT           __initial_sp
-   10 00000400         __initial_sp
-   11 00000400         
-   12 00000400                 AREA             HEAP, DATA, NOINIT, READWRITE, 
+    9 00004000                 EXPORT           __initial_sp
+   10 00004000         __initial_sp
+   11 00004000         
+   12 00004000                 AREA             HEAP, DATA, NOINIT, READWRITE, 
 ALIGN=3
    13 00000000                 EXPORT           __heap_base
    14 00000000         __heap_base
    15 00000000         Heap_Mem
                                SPACE            Heap_Size
-   16 00000200                 EXPORT           __heap_limit
-   17 00000200         __heap_limit
-   18 00000200         
-   19 00000200                 AREA             RESET, DATA, READONLY, ALIGN=3
+   16 00002000                 EXPORT           __heap_limit
+   17 00002000         __heap_limit
+   18 00002000         
+   19 00002000                 AREA             RESET, DATA, READONLY, ALIGN=3
    20 00000000                 EXPORT           __Vectors
    21 00000000 00000000 
                        __Vectors
@@ -145,11 +145,11 @@ ARM Macro Assembler    Page 3
   106 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M7.fp.dp 
---depend=.\objects\startup_armcm7.d -o.\objects\startup_armcm7.o -IC:\Users\LX\
-AppData\Local\Arm\Packs\ARM\Cortex_DFP\1.1.0\Device\ARMCM7\Include --predefine=
-"__UVISION_VERSION SETA 540" --predefine="ARMCM7 SETA 1" --list=.\listings\star
-tup_armcm7.lst ..\startup_ARMCM7.s
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M7 --fpu=
+SoftVFP --depend=.\objects\startup_armcm7.d -o.\objects\startup_armcm7.o -IC:\U
+sers\LX\AppData\Local\Arm\Packs\ARM\Cortex_DFP\1.1.0\Device\ARMCM7\Include --pr
+edefine="__UVISION_VERSION SETA 540" --predefine="ARMCM7 SETA 1" --list=.\listi
+ngs\startup_armcm7.lst startup_ARMCM7.s
 
 
 
@@ -160,7 +160,7 @@ STACK 00000000
 
 Symbol: STACK
    Definitions
-      At line 7 in file ..\startup_ARMCM7.s
+      At line 7 in file startup_ARMCM7.s
    Uses
       None
 Comment: STACK unused
@@ -168,18 +168,18 @@ Stack_Mem 00000000
 
 Symbol: Stack_Mem
    Definitions
-      At line 8 in file ..\startup_ARMCM7.s
+      At line 8 in file startup_ARMCM7.s
    Uses
       None
 Comment: Stack_Mem unused
-__initial_sp 00000400
+__initial_sp 00004000
 
 Symbol: __initial_sp
    Definitions
-      At line 10 in file ..\startup_ARMCM7.s
+      At line 10 in file startup_ARMCM7.s
    Uses
-      At line 9 in file ..\startup_ARMCM7.s
-      At line 21 in file ..\startup_ARMCM7.s
+      At line 9 in file startup_ARMCM7.s
+      At line 21 in file startup_ARMCM7.s
 
 3 symbols
 
@@ -192,7 +192,7 @@ HEAP 00000000
 
 Symbol: HEAP
    Definitions
-      At line 12 in file ..\startup_ARMCM7.s
+      At line 12 in file startup_ARMCM7.s
    Uses
       None
 Comment: HEAP unused
@@ -200,7 +200,7 @@ Heap_Mem 00000000
 
 Symbol: Heap_Mem
    Definitions
-      At line 15 in file ..\startup_ARMCM7.s
+      At line 15 in file startup_ARMCM7.s
    Uses
       None
 Comment: Heap_Mem unused
@@ -208,17 +208,17 @@ __heap_base 00000000
 
 Symbol: __heap_base
    Definitions
-      At line 14 in file ..\startup_ARMCM7.s
+      At line 14 in file startup_ARMCM7.s
    Uses
-      At line 13 in file ..\startup_ARMCM7.s
+      At line 13 in file startup_ARMCM7.s
 Comment: __heap_base used once
-__heap_limit 00000200
+__heap_limit 00002000
 
 Symbol: __heap_limit
    Definitions
-      At line 17 in file ..\startup_ARMCM7.s
+      At line 17 in file startup_ARMCM7.s
    Uses
-      At line 16 in file ..\startup_ARMCM7.s
+      At line 16 in file startup_ARMCM7.s
 Comment: __heap_limit used once
 4 symbols
 
@@ -231,7 +231,7 @@ RESET 00000000
 
 Symbol: RESET
    Definitions
-      At line 19 in file ..\startup_ARMCM7.s
+      At line 19 in file startup_ARMCM7.s
    Uses
       None
 Comment: RESET unused
@@ -239,9 +239,9 @@ __Vectors 00000000
 
 Symbol: __Vectors
    Definitions
-      At line 21 in file ..\startup_ARMCM7.s
+      At line 21 in file startup_ARMCM7.s
    Uses
-      At line 20 in file ..\startup_ARMCM7.s
+      At line 20 in file startup_ARMCM7.s
 Comment: __Vectors used once
 2 symbols
 
@@ -254,7 +254,7 @@ Relocatable symbols
 
 Symbol: .text
    Definitions
-      At line 40 in file ..\startup_ARMCM7.s
+      At line 40 in file startup_ARMCM7.s
    Uses
       None
 Comment: .text unused
@@ -262,52 +262,52 @@ BusFault_Handler 0000000E
 
 Symbol: BusFault_Handler
    Definitions
-      At line 70 in file ..\startup_ARMCM7.s
+      At line 70 in file startup_ARMCM7.s
    Uses
-      At line 26 in file ..\startup_ARMCM7.s
-      At line 69 in file ..\startup_ARMCM7.s
+      At line 26 in file startup_ARMCM7.s
+      At line 69 in file startup_ARMCM7.s
 
 DebugMon_Handler 00000014
 
 Symbol: DebugMon_Handler
    Definitions
-      At line 85 in file ..\startup_ARMCM7.s
+      At line 85 in file startup_ARMCM7.s
    Uses
-      At line 33 in file ..\startup_ARMCM7.s
-      At line 84 in file ..\startup_ARMCM7.s
+      At line 33 in file startup_ARMCM7.s
+      At line 84 in file startup_ARMCM7.s
 
 HardFault_Handler 0000000A
 
 Symbol: HardFault_Handler
    Definitions
-      At line 60 in file ..\startup_ARMCM7.s
+      At line 60 in file startup_ARMCM7.s
    Uses
-      At line 24 in file ..\startup_ARMCM7.s
-      At line 59 in file ..\startup_ARMCM7.s
+      At line 24 in file startup_ARMCM7.s
+      At line 59 in file startup_ARMCM7.s
 
 MemManage_Handler 0000000C
 
 Symbol: MemManage_Handler
    Definitions
-      At line 65 in file ..\startup_ARMCM7.s
+      At line 65 in file startup_ARMCM7.s
    Uses
-      At line 25 in file ..\startup_ARMCM7.s
-      At line 64 in file ..\startup_ARMCM7.s
+      At line 25 in file startup_ARMCM7.s
+      At line 64 in file startup_ARMCM7.s
 
 NMI_Handler 00000008
 
 Symbol: NMI_Handler
    Definitions
-      At line 55 in file ..\startup_ARMCM7.s
+      At line 55 in file startup_ARMCM7.s
    Uses
-      At line 23 in file ..\startup_ARMCM7.s
-      At line 54 in file ..\startup_ARMCM7.s
+      At line 23 in file startup_ARMCM7.s
+      At line 54 in file startup_ARMCM7.s
 
 PendSV_Handler 00000016
 
 Symbol: PendSV_Handler
    Definitions
-      At line 90 in file ..\startup_ARMCM7.s
+      At line 90 in file startup_ARMCM7.s
    Uses
 
 
@@ -315,53 +315,53 @@ Symbol: PendSV_Handler
 ARM Macro Assembler    Page 2 Alphabetic symbol ordering
 Relocatable symbols
 
-      At line 35 in file ..\startup_ARMCM7.s
-      At line 89 in file ..\startup_ARMCM7.s
+      At line 35 in file startup_ARMCM7.s
+      At line 89 in file startup_ARMCM7.s
 
 Reset_Handler 00000000
 
 Symbol: Reset_Handler
    Definitions
-      At line 45 in file ..\startup_ARMCM7.s
+      At line 45 in file startup_ARMCM7.s
    Uses
-      At line 22 in file ..\startup_ARMCM7.s
-      At line 44 in file ..\startup_ARMCM7.s
+      At line 22 in file startup_ARMCM7.s
+      At line 44 in file startup_ARMCM7.s
 
 SVC_Handler 00000012
 
 Symbol: SVC_Handler
    Definitions
-      At line 80 in file ..\startup_ARMCM7.s
+      At line 80 in file startup_ARMCM7.s
    Uses
-      At line 32 in file ..\startup_ARMCM7.s
-      At line 79 in file ..\startup_ARMCM7.s
+      At line 32 in file startup_ARMCM7.s
+      At line 79 in file startup_ARMCM7.s
 
 SysTick_Handler 00000018
 
 Symbol: SysTick_Handler
    Definitions
-      At line 95 in file ..\startup_ARMCM7.s
+      At line 95 in file startup_ARMCM7.s
    Uses
-      At line 36 in file ..\startup_ARMCM7.s
-      At line 94 in file ..\startup_ARMCM7.s
+      At line 36 in file startup_ARMCM7.s
+      At line 94 in file startup_ARMCM7.s
 
 SystemInit 0000001A
 
 Symbol: SystemInit
    Definitions
-      At line 100 in file ..\startup_ARMCM7.s
+      At line 100 in file startup_ARMCM7.s
    Uses
-      At line 46 in file ..\startup_ARMCM7.s
-      At line 99 in file ..\startup_ARMCM7.s
+      At line 46 in file startup_ARMCM7.s
+      At line 99 in file startup_ARMCM7.s
 
 UsageFault_Handler 00000010
 
 Symbol: UsageFault_Handler
    Definitions
-      At line 75 in file ..\startup_ARMCM7.s
+      At line 75 in file startup_ARMCM7.s
    Uses
-      At line 27 in file ..\startup_ARMCM7.s
-      At line 74 in file ..\startup_ARMCM7.s
+      At line 27 in file startup_ARMCM7.s
+      At line 74 in file startup_ARMCM7.s
 
 12 symbols
 
@@ -370,21 +370,21 @@ Symbol: UsageFault_Handler
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-Heap_Size 00000200
+Heap_Size 00002000
 
 Symbol: Heap_Size
    Definitions
-      At line 5 in file ..\startup_ARMCM7.s
+      At line 5 in file startup_ARMCM7.s
    Uses
-      At line 15 in file ..\startup_ARMCM7.s
+      At line 15 in file startup_ARMCM7.s
 Comment: Heap_Size used once
-Stack_Size 00000400
+Stack_Size 00004000
 
 Symbol: Stack_Size
    Definitions
-      At line 4 in file ..\startup_ARMCM7.s
+      At line 4 in file startup_ARMCM7.s
    Uses
-      At line 8 in file ..\startup_ARMCM7.s
+      At line 8 in file startup_ARMCM7.s
 Comment: Stack_Size used once
 2 symbols
 
@@ -397,9 +397,9 @@ __main 00000000
 
 Symbol: __main
    Definitions
-      At line 42 in file ..\startup_ARMCM7.s
+      At line 42 in file startup_ARMCM7.s
    Uses
-      At line 48 in file ..\startup_ARMCM7.s
+      At line 48 in file startup_ARMCM7.s
 Comment: __main used once
 1 symbol
-359 symbols in table
+358 symbols in table

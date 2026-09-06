@@ -1,8 +1,8 @@
                 PRESERVE8
                 THUMB
 
-Stack_Size      EQU     0x00000400
-Heap_Size       EQU     0x00000200
+Stack_Size      EQU     0x00004000
+Heap_Size       EQU     0x00002000
 
                 AREA    STACK, DATA, NOINIT, READWRITE, ALIGN=3
 Stack_Mem       SPACE   Stack_Size
