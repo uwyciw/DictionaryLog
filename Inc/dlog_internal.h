@@ -2,7 +2,6 @@
   ******************************************************************************
     * @file dlog_internal.h
     * @author lx
-    * @version v1.0.0
     * @date 2020-10-21
     * @brief 一种低空间消耗的文本日志方案。
    =============================================================================
@@ -79,11 +78,7 @@ void DLogWrite(uint32_t level, uint32_t key, int argc, ...);
         DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
     } while (0)
 #else
-#define __DLOG_PRINTF(level, format, args...)                                                           \
-    do {                                                                                                \
-        const static char logstr[] = format;                                                            \
-        DLogWrite(level, (unsigned int)logstr, __DLOG_ARGS_COUNTER(unused, ##args), ##args);            \
-    } while (0)
+#error "Unsupported compiler."
 #endif
 
 #endif // _DLOG_INTERNAL_H_
