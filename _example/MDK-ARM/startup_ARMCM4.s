@@ -1,3 +1,8 @@
+;*******************************************************************************
+;* @file     startup_ARMCM4.s
+;* @brief    CMSIS Cortex-M4 Core Device Startup File
+;*******************************************************************************
+
                 PRESERVE8
                 THUMB
 
@@ -18,6 +23,8 @@ __heap_limit
 
                 AREA    RESET, DATA, READONLY, ALIGN=3
                 EXPORT  __Vectors
+                EXPORT  __Vectors_End
+                EXPORT  __Vectors_Size
 __Vectors       DCD     __initial_sp
                 DCD     Reset_Handler
                 DCD     NMI_Handler
@@ -34,70 +41,69 @@ __Vectors       DCD     __initial_sp
                 DCD     0
                 DCD     PendSV_Handler
                 DCD     SysTick_Handler
+__Vectors_End
 
-                ALIGN
+__Vectors_Size  EQU     __Vectors_End - __Vectors
 
                 AREA    |.text|, CODE, READONLY
 
                 IMPORT  __main
 
-                EXPORT  Reset_Handler [WEAK]
 Reset_Handler   PROC
+                EXPORT  Reset_Handler [WEAK]
                 LDR     R0, =SystemInit
                 BLX     R0
                 LDR     R0, =__main
                 BX      R0
                 ENDP
 
+NMI_Handler     PROC
+                EXPORT  NMI_Handler [WEAK]
+                B       .
+                ENDP
+HardFault_Handler PROC
+                EXPORT  HardFault_Handler [WEAK]
+                B       .
+                ENDP
+MemManage_Handler PROC
+                EXPORT  MemManage_Handler [WEAK]
+                B       .
+                ENDP
+BusFault_Handler PROC
+                EXPORT  BusFault_Handler [WEAK]
+                B       .
+                ENDP
+UsageFault_Handler PROC
+                EXPORT  UsageFault_Handler [WEAK]
+                B       .
+                ENDP
+SVC_Handler     PROC
+                EXPORT  SVC_Handler [WEAK]
+                B       .
+                ENDP
+DebugMon_Handler PROC
+                EXPORT  DebugMon_Handler [WEAK]
+                B       .
+                ENDP
+PendSV_Handler  PROC
+                EXPORT  PendSV_Handler [WEAK]
+                B       .
+                ENDP
+SysTick_Handler PROC
+                EXPORT  SysTick_Handler [WEAK]
+                B       .
+                ENDP
+
                 ALIGN
 
-                EXPORT  NMI_Handler [WEAK]
-NMI_Handler     PROC
-                B       .
-                ENDP
-
-                EXPORT  HardFault_Handler [WEAK]
-HardFault_Handler PROC
-                B       .
-                ENDP
-
-                EXPORT  MemManage_Handler [WEAK]
-MemManage_Handler PROC
-                B       .
-                ENDP
-
-                EXPORT  BusFault_Handler [WEAK]
-BusFault_Handler PROC
-                B       .
-                ENDP
-
-                EXPORT  UsageFault_Handler [WEAK]
-UsageFault_Handler PROC
-                B       .
-                ENDP
-
-                EXPORT  SVC_Handler [WEAK]
-SVC_Handler     PROC
-                B       .
-                ENDP
-
-                EXPORT  DebugMon_Handler [WEAK]
-DebugMon_Handler PROC
-                B       .
-                ENDP
-
-                EXPORT  PendSV_Handler [WEAK]
-PendSV_Handler  PROC
-                B       .
-                ENDP
-
-                EXPORT  SysTick_Handler [WEAK]
-SysTick_Handler PROC
-                B       .
-                ENDP
-
-                EXPORT  SystemInit [WEAK]
 SystemInit      PROC
+                EXPORT  SystemInit [WEAK]
+                LDR     R0, =0xE000ED88
+                LDR     R1, [R0]
+                ORR     R1, R1, #0x00F00000
+                STR     R1, [R0]
+                DSB
+                ISB
                 BX      LR
                 ENDP
 

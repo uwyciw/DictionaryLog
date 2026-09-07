@@ -221,8 +221,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\startup_ARMCM7.s</PathWithFileName>
-      <FilenameWithoutPath>startup_ARMCM7.s</FilenameWithoutPath>
+      <PathWithFileName>.\startup_ARMCM4.s</PathWithFileName>
+      <FilenameWithoutPath>startup_ARMCM4.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
