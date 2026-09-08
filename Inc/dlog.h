@@ -25,7 +25,7 @@
 #include "dlog_internal.h"
 
 /**
- * @brief 时间戳类型，用户可根据实际情况进行修改。
+ * @brief 时间戳类型，用户可根据实际情况进行修改，只支持32bit和64bit。
  */
 typedef uint32_t DLOG_TIMESTAMP_T;
 
@@ -33,9 +33,7 @@ typedef uint32_t DLOG_TIMESTAMP_T;
  * @brief 用于存储文本格式内容的起始地址；通过定义准确的起始地址，有助于 Dlog 为每条日志分配更有效的 Key 值，即可以充分利用
  *        19bit 的 Key 值空间，实现总计 512KB 文本格式内容的索引空间。
  */
-#ifndef DLOG_FORMAT_START_ADDRESS
-#define DLOG_FORMAT_START_ADDRESS 0u
-#endif
+#define DLOG_FORMAT_START_ADDRESS 0x10000000
 
 /**
  * @brief 打印等级。
@@ -50,7 +48,7 @@ typedef enum {
 /**
  * @brief DLog的初始化函数。
  * @note
- * @param timestamp:获取时间戳的函数，如不需要时间戳信息，可赋值为NULL；
+ * @param timestamp:获取时间戳的函数，如不需要时间戳信息，可赋值为NULL，DLog将不会存储时间戳信息；
  * @param store:存储函数，每次打印，都调用该函数完成对日志数据的存储；用户需要在该函数内完成日志头中SN的自增和并发控制；dlog向该store传递的指针指向的空间皆为临时空间，用户需要在store返回前完成拷贝。
  * @retval true——初始化成功；false——初始化失败。
  */

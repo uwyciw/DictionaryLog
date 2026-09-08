@@ -37,10 +37,10 @@ log_level = ("Error", "Warn ", "Info ", "Debug")
 '''
  @brief 依据logstr文件，将日志文件解析成文本文件。
  @note
- @param binFileName：日志文件名；logstrFileName：logstr文件名；timestampEnable：是否使能了时间戳。
+ @param binFileName：日志文件名；logstrFileName：logstr文件名；timestampSize：时间戳字节数，取值0/4/8。
  @retval 若转换成功，产生文本文件——log.txt。
 '''
-def Bin2Txt(binFileName, logstrFileName, timestampEnable):
+def Bin2Txt(binFileName, logstrFileName, timestampSize):
     index = 0
     oneLog = ""
     
@@ -59,7 +59,7 @@ def Bin2Txt(binFileName, logstrFileName, timestampEnable):
     logFile =  open("log.txt", "w") # 用于保存日志的TXT文件。
 
     while index < len(binContent): # 处理bin文件中的全部日志，并将产生的文本信息写入文件。
-        oneLog, used = ParseOneLog(binContent[index:], timestampEnable, logstrContent)
+        oneLog, used = ParseOneLog(binContent[index:], timestampSize, logstrContent)
         index = index + used
         logFile.write(oneLog)
     logFile.close()
@@ -97,10 +97,10 @@ def BinFieldParse(logBody):
 '''
  @brief 从传入的字节数组的起始位置解析出一条日志。
  @note
- @param byteArray：字节数组；timestampEnable：是否使能了时间戳；logstrContent：logstr内容。
+ @param byteArray：字节数组；timestampSize：时间戳字节数，取值0/4/8；logstrContent：logstr内容。
  @retval 一行日志字符串，使用的字节数。
 '''
-def ParseOneLog(byteArray, timestampEnable, logstrContent):
+def ParseOneLog(byteArray, timestampSize, logstrContent):
     index = 0
     arguments = []
     formateField = ""
@@ -110,10 +110,7 @@ def ParseOneLog(byteArray, timestampEnable, logstrContent):
     index = index + 4
     sn, argc, level, key = BinFieldParse(logBody[0]) # 解析日志头的内容。
 
-    if timestampEnable == True: # 计算该日志解析所需要的字节数。
-        needBytesNumber = 4 + 4 + argc * 4 # 日志头4字节、时间戳4字节、每个参数4字节
-    else:
-        needBytesNumber = 4 + argc * 4 # 没有时间戳。
+    needBytesNumber = 4 + timestampSize + argc * 4 # 日志头4字节、时间戳、每个参数4字节
     
     if len(byteArray) < needBytesNumber: # 如果剩余的字节数不足，则返回空字符，使用字节数为4。
         print("Not enough bytes left!")
@@ -125,9 +122,12 @@ def ParseOneLog(byteArray, timestampEnable, logstrContent):
     else:
         formateField = logstrContent[str(key)]
 
-    if timestampEnable == True: # 有时间戳时，读取时间戳。
+    if timestampSize == 4: # 4字节时间戳。
         timestamp = struct.unpack("<I", bytes(byteArray[index:index+4]))[0]
         index = index + 4
+    elif timestampSize == 8: # 8字节时间戳。
+        timestamp = struct.unpack("<Q", bytes(byteArray[index:index+8]))[0]
+        index = index + 8
 
     if argc > 0: # 如果该条日志有参数，依据转换字符的符号性逐一读取。
         convs = [c for c in FORMAT_SPEC_RE.findall(formateField) if c]
@@ -141,7 +141,7 @@ def ParseOneLog(byteArray, timestampEnable, logstrContent):
                 arguments.append(value & 0xFFFFFFFF)
             index = index + 4
 
-    if timestampEnable == True: # 每条日志的头部信息。
+    if timestampSize > 0: # 每条日志的头部信息。
         log = "[sn:%03d][%5s][%d]:" % (sn, log_level[level], timestamp)
     else:
         log = "[sn:%03d][%5s]:" % (sn, log_level[level])

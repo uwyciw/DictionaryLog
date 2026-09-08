@@ -11,9 +11,9 @@ from elftools.elf.elffile import ELFFile
 LOGSTR_BASE = 0x10000000
 
 '''
- @brief 日志中是否包含时间戳，与 DLogInit 注册的时间戳函数保持对应。
+ @brief 时间戳字节数，与 DLogInit 注册的时间戳函数保持对应。取值：0/4/8。
 '''
-TIMESTAMP_ENABLE = True
+TIMESTAMP_SIZE = 4
 
 '''
  @brief 按链接地址在 ELF 中定位 logstr 段，并生成 logstr.json。
@@ -34,4 +34,4 @@ def ELF2LogstrByAddress(elfFileName, base):
 
 # 先从ELF生成logstr.json，成功后再依据其解析dlog.bin，一步得到log.txt。
 if ELF2LogstrByAddress("../EWARM/Debug/Exe/example.elf", LOGSTR_BASE):
-    bin2txt.Bin2Txt("../EWARM/dlog.bin", "logstr.json", TIMESTAMP_ENABLE)
+    bin2txt.Bin2Txt("../EWARM/dlog.bin", "logstr.json", TIMESTAMP_SIZE)
