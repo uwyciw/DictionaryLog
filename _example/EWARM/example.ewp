@@ -784,7 +784,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\example.icf</state>
+                    <state>$PROJ_DIR$\example.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>

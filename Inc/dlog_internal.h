@@ -39,8 +39,8 @@
   * @brief DLog日志头。
   */
 typedef struct {
-    uint32_t SN : 8;    // 日志序号[0 255]。
     uint32_t Argc : 3;  // 参数数目[0 7]。
+    uint32_t SN : 8;    // 日志序号[0 255]。
     uint32_t Level : 2; // 日志等级[0 3]，数值越小，级别越高。
     uint32_t Key : 19;  // 字符文本的检索键值，由编译时字符文本存储的空间地址转换而来。
 } DLOG_HEAD_T;

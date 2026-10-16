@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files\IAR\common\bin\cspybat" -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" --backend -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
+"C:\Program Files\IAR\common\bin\cspybat" -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" --backend -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files\IAR\common\bin\cspybat" -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" "--debug_file=%~1" --backend -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
+"C:\Program Files\IAR\common\bin\cspybat" -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
 
 @echo off 
 :end

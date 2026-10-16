@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files\IAR\common\bin\cspybat" -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" --backend -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
+& "C:\Program Files\IAR\common\bin\cspybat" -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" --backend -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files\IAR\common\bin\cspybat" -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\LX\Desktop\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
+& "C:\Program Files\IAR\common\bin\cspybat" -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\Code\DictionaryLog\_example\EWARM\settings\example.Debug.driver.xcl" 
 }
