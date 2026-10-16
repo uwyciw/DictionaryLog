@@ -200,8 +200,8 @@ Building requires `arm-none-eabi-gcc` on the PATH (`build.cmd` checks the PATH a
 ## Limitations
 
 - At most **7 arguments** per log entry (`DLOG_ARGS_MAX`).
-- Arguments are always stored as **32-bit values**; wider values are truncated automatically, and floating-point arguments are not supported.
-- Stick to integer/character format specifiers: `%d %i %u %o %x %X %c` (the parsing script restores signed/unsigned according to the specifier).
+- Arguments are always stored as **32-bit values**; wider values are truncated automatically.
+- Stick to integer/character format specifiers: `%d %i %u %o %x %X %c %f` (the parsing script restores signed/unsigned according to the specifier).
 - The log sequence number SN is 8-bit (wrapping 0–255) and is incremented by the storage callback.
 - If the string region's address or range changes, be sure to update all three configuration points in sync (see [Key Configuration](#key-configuration-three-addresses-that-must-stay-in-sync) above).
 
